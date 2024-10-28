@@ -11,14 +11,24 @@
 </head>
 <body>
     <header>
-        <h1><a href="{% url 'home' %} ">Ibaydulo Blog</a> </h1>
+        <h1><a href="{% url 'home' %}">Ibaydulo Blog</a></h1>
     </header>
+    {% if user.is_authenticated %}
+        <p>Xush kelibsiz, {{ user.username }}!</p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Chiqib ketish</button>
+        </form>
+    {% else %}
+        <p><a href="{% url 'login' %}">Sayitga Kirish</a> |
+        <a href="{% url 'signup' %}">Ro'yxatdan o'tish</a></p>
+    {% endif %}
     <div>
         {% block content %}
         {% endblock content %}
     </div>
     <footer>
-        <h2><a href="{% url 'post_new' %}">Yangi post yozish</a> </h2>
+        <h2><a href="{% url 'post_new' %}">Yangi post yozish</a></h2>
     </footer>
 </body>
 </html>
